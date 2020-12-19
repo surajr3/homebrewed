@@ -26,6 +26,22 @@ namespace HomeBrewed
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddSwaggerDocument(config =>
+            {
+                config.PostProcess = document =>
+                {
+                    document.Info.Version = "1.0.0";
+                    document.Info.Title = "HomeBrewed";
+                    document.Info.Description = "A simple ASP.NET Core API application for demonstration purposes of an imaginary beer website.";
+                    document.Info.Contact = new NSwag.OpenApiContact
+                    {
+                        Name = "J. Law. Cordova",
+                        Email = string.Empty,
+                        Url = "https://jlawcordova.com"
+                    };
+                };
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,6 +62,9 @@ namespace HomeBrewed
             {
                 endpoints.MapControllers();
             });
+
+            app.UseOpenApi();
+            app.UseSwaggerUi3();
         }
     }
 }

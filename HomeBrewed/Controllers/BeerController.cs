@@ -5,11 +5,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HomeBrewed.Models;
+using System.ComponentModel;
+using Microsoft.AspNetCore.Http;
+using NSwag.Annotations;
+using System.Net;
 
 namespace HomeBrewed.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [OpenApiTag("Beer", Description = "The beer resource.")]
     public class BeerController : ControllerBase
     {
         private static readonly Beer[] beers = new Beer[] {
@@ -24,18 +29,32 @@ namespace HomeBrewed.Controllers
             this.logger = logger;
         }
 
+        /// <summary>
+        /// Fetch all beers.
+        /// </summary>
+        /// <response code="200">Successfully fetched all beers.</response>
+        [ProducesResponseType(typeof(Beer[]), StatusCodes.Status200OK)]
         [HttpGet]
-        public IEnumerable<Beer> Get()
+        public ActionResult<IEnumerable<Beer>> Get()
         {
             logger?.LogInformation(1, "Retrieved all beers");
 
             return beers;
         }
 
+        /// <summary>
+        /// Fetch a beer with a given ID.
+        /// </summary>
+        /// <param name="id">ID of the beer to be fetched.</param>
+        /// <response code="200">Successfully fetched beer.</response>
+        /// <response code="400">Beer ID invalid.</response>
+        /// <response code="404">Beer ID does not exist.</response>
         [HttpGet("{id}")]
-        public ActionResult<Beer> GetById([FromRoute] int id)
+        [ProducesResponseType(typeof(Beer), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+        public ActionResult<Beer> GetById([FromRoute]int id)
         {
-
             var beer = beers.FirstOrDefault(b => b.Id == id);
 
             if (beer != null)

@@ -28,7 +28,7 @@ jobs:
       run: dotnet tool install --global dotnet-reportgenerator-globaltool --version 4.8.1
     - name: Generate report
       working-directory: ./HomeBrewed.Test
-      run: reportgenerator -reports:D:./TestResults/*/*.xml -targetdir:./Reports
+      run: reportgenerator -reports:./TestResults/*/*.xml -targetdir:./Reports
     - name: Archive report
       uses: actions/upload-artifact@v2
       with:

@@ -10,8 +10,15 @@ using System.Threading.Tasks;
 
 namespace HomeBrewed
 {
+    /// <summary>
+    /// Runs the HomeBrewed program.
+    /// </summary>
     public class Program
     {
+        /// <summary>
+        /// Program entry point.
+        /// </summary>
+        /// <param name="args"></param>
         public static void Main(string[] args)
         {
             var logger = NLog.Web.NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
@@ -31,6 +38,11 @@ namespace HomeBrewed
             }
         }
 
+        /// <summary>
+        /// Creates the host builder to run the web application.
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>

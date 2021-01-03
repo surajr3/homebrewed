@@ -12,6 +12,9 @@ using System.Net;
 
 namespace HomeBrewed.Controllers
 {
+    /// <summary>
+    /// The beer resource.
+    /// </summary>
     [ApiController]
     [Route("[controller]")]
     [OpenApiTag("Beer", Description = "The beer resource.")]
@@ -24,6 +27,10 @@ namespace HomeBrewed.Controllers
         };
         private readonly ILogger<BeerController> logger;
 
+        /// <summary>
+        /// The beer resource.
+        /// </summary>
+        /// <param name="logger"></param>
         public BeerController(ILogger<BeerController> logger)
         {
             this.logger = logger;

@@ -13,6 +13,9 @@ using System.Threading.Tasks;
 
 namespace HomeBrewed
 {
+    /// <summary>
+    /// Application starting point.
+    /// </summary>
     public class Startup
     {
         public Startup(IConfiguration configuration)

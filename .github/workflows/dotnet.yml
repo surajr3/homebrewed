@@ -22,11 +22,13 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Test
-      run: cd HomeBrewed.Test && dotnet test --collect:"XPlat Code Coverage"
+      working-directory: ./HomeBrewed.Test
+      run: dotnet test --collect:"XPlat Code Coverage"
     - name: Install reportgenerator
       run: dotnet tool install --global dotnet-reportgenerator-globaltool --version 4.8.1
     - name: Generate report
-      run: cd HomeBrewed.Test && reportgenerator -reports:D:./TestResults/*/*.xml -targetdir:./Reports
+      working-directory: ./HomeBrewed.Test
+      run: reportgenerator -reports:D:./TestResults/*/*.xml -targetdir:./Reports
     - name: Archive report
       uses: actions/upload-artifact@v2
       with:

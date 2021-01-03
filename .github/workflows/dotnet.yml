@@ -19,17 +19,17 @@ jobs:
         dotnet-version: 3.1.301
     - name: Restore dependencies
       run: dotnet restore
+    - name: Install reportgenerator
+      run: dotnet tool install --global dotnet-reportgenerator-globaltool --version 4.8.1
     - name: Build
       run: dotnet build --no-restore
     - name: Test
       working-directory: ./HomeBrewed.Test
       run: dotnet test --collect:"XPlat Code Coverage"
-    - name: Install reportgenerator
-      run: dotnet tool install --global dotnet-reportgenerator-globaltool --version 4.8.1
     - name: Generate report
       working-directory: ./HomeBrewed.Test
       run: reportgenerator -reports:./TestResults/*/*.xml -targetdir:./Reports
-    - name: Archive report
+    - name: Create report artifact
       uses: actions/upload-artifact@v2
       with:
         name: unit-test-report

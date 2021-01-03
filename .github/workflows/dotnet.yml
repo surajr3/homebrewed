@@ -24,9 +24,9 @@ jobs:
     - name: Test
       run: dotnet test --collect:"XPlat Code Coverage"
     - name: Generate report
-      run: reportgenerator -reports:D:./TestResults//.xml -targetdir:./Reports
+      run: cd HomeBrewed.Test && reportgenerator -reports:D:./TestResults//.xml -targetdir:./Reports
     - name: Archive report
       uses: actions/upload-artifact@v2
       with:
         name: unit-test-report
-        path: ./Reports
+        path: HomeBrewed.Test/Reports
